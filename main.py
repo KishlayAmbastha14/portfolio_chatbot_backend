@@ -5,12 +5,12 @@ from langchain_community.document_loaders import JSONLoader
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
-
+from langchain_community.embeddings import FastEmbedEmbeddings
 from langchain_groq import ChatGroq
 from langchain.memory import ConversationBufferMemory
 
 from langchain.chains import ConversationalRetrievalChain
-from langchain_huggingface import HuggingFaceEmbeddings
+# from langchain_huggingface import HuggingFaceEmbeddings
 from dotenv import load_dotenv
 import os
 from fastapi import FastAPI
@@ -39,16 +39,23 @@ class Response(BaseModel):
 groq_api_key = os.getenv("GROQ_API_KEY")
 # os.environ["HUGGINGFACEHUB_API_TOKEN"] = os.getenv("HUGGINGFACEHUB_API_TOKEN")
 
-hf_token = os.getenv("HUGGINGFACEHUB_API_TOKEN")
-if hf_token:
-  os.environ["HUGGINGFACEHUB_API_TOKEN"] = hf_token
+# hf_token = os.getenv("HUGGINGFACEHUB_API_TOKEN")
+# if hf_token:
+  # os.environ["HUGGINGFACEHUB_API_TOKEN"] = hf_token
 
 # # ==================== LLM and Embeddings ============
 llm = ChatGroq(model="openai/gpt-oss-120b",groq_api_key=groq_api_key)
 # # print(llm)
 # # exit()
 
-embeddings = HuggingFaceEmbeddings(model_name = "sentence-transformers/paraphrase-MiniLM-L3-v2")
+# embeddings = HuggingFaceEmbeddings(model_name = "sentence-transformers/paraphrase-MiniLM-L3-v2")
+
+
+
+embeddings = FastEmbedEmbeddings(
+    model_name="BAAI/bge-small-en-v1.5"
+)
+
 
 # # VECTOR_DIR = "kishlay_vectorestore"
 # # VECTOR_DIR = r"C:\Users\kishl\OneDrive\Desktop\GEN\PERSONAL_CHATBOT\kishlay_vectorestore"
