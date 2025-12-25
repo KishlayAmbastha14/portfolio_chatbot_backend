@@ -37,7 +37,11 @@ class Response(BaseModel):
 
 # ------------- here i loaded the environment things
 groq_api_key = os.getenv("GROQ_API_KEY")
-os.environ["HUGGINGFACEHUB_API_TOKEN"] = os.getenv("HUGGINGFACEHUB_API_TOKEN")
+# os.environ["HUGGINGFACEHUB_API_TOKEN"] = os.getenv("HUGGINGFACEHUB_API_TOKEN")
+
+hf_token = os.getenv("HUGGINGFACEHUB_API_TOKEN")
+if hf_token:
+  os.environ["HUGGINGFACEHUB_API_TOKEN"] = hf_token
 
 # # ==================== LLM and Embeddings ============
 llm = ChatGroq(model="openai/gpt-oss-120b",groq_api_key=groq_api_key)
@@ -158,3 +162,11 @@ async def kishlay_chatbot(res:Response):
 
 
 
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(
+        "main:app",
+        host="0.0.0.0",
+        port=8000,
+        reload=False
+    )
