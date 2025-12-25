@@ -19,7 +19,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
 
-app = FastAPI()
+app = FastAPI(title='Kishlay Chatbot Backend')
 
 app.add_middleware(
     CORSMiddleware,
@@ -29,9 +29,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# @app.get("/")
-# async def getting():
-#   return "hlo to fastapi get "
+@app.get("/")
+async def getting():
+  return "hlo to fastapi get "
 class Response(BaseModel):
   message:str
 
@@ -39,16 +39,16 @@ class Response(BaseModel):
 groq_api_key = os.getenv("GROQ_API_KEY")
 os.environ["HUGGINGFACEHUB_API_TOKEN"] = os.getenv("HUGGINGFACEHUB_API_TOKEN")
 
-# ==================== LLM and Embeddings ============
+# # ==================== LLM and Embeddings ============
 llm = ChatGroq(model="openai/gpt-oss-120b",groq_api_key=groq_api_key)
-# print(llm)
-# exit()
+# # print(llm)
+# # exit()
 
 embeddings = HuggingFaceEmbeddings(model_name = "sentence-transformers/paraphrase-MiniLM-L3-v2")
 
-# VECTOR_DIR = "kishlay_vectorestore"
-# VECTOR_DIR = r"C:\Users\kishl\OneDrive\Desktop\GEN\PERSONAL_CHATBOT\kishlay_vectorestore"
-# VECTOR_PATH = os.path.join(VECTOR_DIR,"index.faiss")
+# # VECTOR_DIR = "kishlay_vectorestore"
+# # VECTOR_DIR = r"C:\Users\kishl\OneDrive\Desktop\GEN\PERSONAL_CHATBOT\kishlay_vectorestore"
+# # VECTOR_PATH = os.path.join(VECTOR_DIR,"index.faiss")
 
 VECTOR_DIR = "kishlay_vectorestore"
 VECTOR_PATH = os.path.join(VECTOR_DIR, "index.faiss")
@@ -77,15 +77,15 @@ def get_vectorstore():
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=500,chunk_overlap=100)
     split_docs = text_splitter.split_documents(all_data)
 
-    #  ---------------- create and save faiss index ----------
+#     #  ---------------- create and save faiss index ----------
     vector_db = FAISS.from_documents(split_docs,embeddings)
     vector_db.save_local(VECTOR_DIR)
 
-    print('vectorstore created')
+#     print('vectorstore created')
 
     return vector_db
 
-# vector_db = get_vectorstore()
+# # vector_db = get_vectorstore()
 
 
 
@@ -131,7 +131,7 @@ def get_chain():
       return_messages=True
     )
 
-# retriever = vector_db.as_retriever()
+# # retriever = vector_db.as_retriever()
 
     chain = ConversationalRetrievalChain.from_llm(
       llm=llm,
