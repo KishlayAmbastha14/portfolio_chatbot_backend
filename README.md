@@ -3,7 +3,7 @@
 Meet **Kishlay AI**, a personalized chatbot that speaks just like *Kishlay Kumar*!  
 It understands his background, projects, skills, and experiences — giving natural, friendly, and context-aware responses.
 
-🚀 **Live App:** [Click to Open on Streamlit](https://your-streamlit-link-here)
+🚀 **Live App:** [Click to Open on FastAPI_Swagger_UI](https://portfolio-chatbot-backend-ebx7.onrender.com/docs)
 
 ---
 
