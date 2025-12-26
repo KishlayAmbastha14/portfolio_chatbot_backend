@@ -1,4 +1,4 @@
-# 💬 Kishlay AI — Personal Chatbot
+# 💬 Kishlay AI — Personal RAG Chatbot
 
 Meet **Kishlay AI**, a personalized chatbot that speaks just like *Kishlay Kumar*!  
 It understands his background, projects, skills, and experiences — giving natural, friendly, and context-aware responses.
