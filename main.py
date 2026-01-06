@@ -30,8 +30,9 @@ app.add_middleware(
 )
 
 @app.get("/")
-async def getting():
-  return "hlo to fastapi get "
+async def health_check():
+    return {"status": "active", "message": "Kishlay Chatbot is Awake! 🚀"}
+    
 class Response(BaseModel):
   message:str
 
@@ -155,17 +156,19 @@ def get_chain():
 
 
 
-@app.get("/")
-async def hlo():
-  return {"welcome to chatbot api"}
 
 
 @app.post("/chatbot")
 async def kishlay_chatbot(res:Response):
-  chain = get_chain()
-  user_input = res.message
-  result = chain.invoke({'question':user_input})
-  return {'answer':result["answer"]}
+    try: 
+        chain = get_chain()
+        if chain is None:
+            return {'answer': "System is initializing, please try again in a moment."}
+        user_input = res.message
+        result = chain.invoke({'question':user_input})
+        return {'answer':result["answer"]}
+    except Exception as e:
+        return {'answer': f"Sorry, something went wrong: {str(e)}"}
 
 
 
