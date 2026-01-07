@@ -32,6 +32,10 @@ app.add_middleware(
 @app.get("/")
 async def health_check():
     return {"status": "active", "message": "Kishlay Chatbot is Awake! 🚀"}
+
+@app.head("/")
+async def keep_alive_check():
+    return {"status": "active"}
     
 class Response(BaseModel):
   message:str
